@@ -10,21 +10,29 @@
 <div class="container">
     <h1>Add Book</h1>
     <form th:action="@{/books/add}" th:object="${book}" method="post">
-        <div class="col-6 mb-3">
-            <label for="title" class="form-label">Id:</label>
-            <input type="text" th:field="*{id}" class="form-control" id="id"></div>
 
         <div class="col-6 mb-3">
+            <label for="title" class="form-label">Id:</label>
+            <input type="text" th:field="*{id}" class="form-control" id="id">
+            <br><span class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
+        </div>
+        <div class="col-6 mb-3">
             <label for="title" class="form-label">Title:</label>
-            <input type="text" th:field="*{title}" class="form-control" id="title"></div>
+            <input type="text" th:field="*{title}" class="form-control" id="title">
+            <br><span class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+        </div>
 
         <div class="col-6 mb-3">
             <label for="author" class="form-label">Author:</label>
-            <input type="text" th:field="*{author}" class="form-control" id="author"></div>
+            <input type="text" th:field="*{author}" class="form-control" id="author">
+            <br><span class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
+        </div>
 
         <div class="col-6 mb-3">
             <label for="price" class="form-label">Price:</label>
-            <input type="text" th:field="*{price}" class="form-control" id="price"></div>
+            <input type="text" th:field="*{price}" class="form-control" id="price">
+            <br><span class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+        </div>
 
         <div class="col-6 mb-3">
             <label for="category" class="form-label">Category:</label>
@@ -33,6 +41,9 @@
                 <option th:each="category : ${categories}" th:value="${category.id}"
                         th:text="${category.name}"></option>
             </select>
+            <br><span class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
+
+
         </div>
         <input type="submit" class="btn btn-primary" value="Save">
     </form>

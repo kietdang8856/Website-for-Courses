@@ -8,10 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import DangTuanKietW3.lab03.services.BookService;
 
 import java.util.List;
@@ -41,11 +38,35 @@ public class BookController {
 
     @PostMapping("/add")
     public String addBook(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()){
+        if(book == null || bindingResult.hasErrors()){
             model.addAttribute("categories", categoryService.getAllCategories());
             return "book/add";
         }
         bookService.addBook(book);
+        return "redirect:/books";
+    }
+    @GetMapping("/edit/{id}")
+    public String editBookForm(@PathVariable("id") Long id, Model model) {
+        Book book = bookService.getBookById(id);
+        if (book != null) {
+            model.addAttribute("book", book);
+            model.addAttribute("categories", categoryService.getAllCategories());
+            return "book/edit";
+        } else {
+            return "not-found";
+        }
+    }
+
+    @PostMapping("/edit")
+    public String editBook(@ModelAttribute("book") Book book) {
+        bookService.updateBook(book);
+        return "redirect:/books";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteBook(@PathVariable("id") Long id)
+    {
+        bookService.deleteBook(id);
         return "redirect:/books";
     }
 }

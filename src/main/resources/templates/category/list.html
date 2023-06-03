@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
 <head>
   <meta charset="UTF-8">
   <title>Category List</title>
@@ -15,14 +17,14 @@
     <tr>
       <th>ID</th>
       <th>Name</th>
-      <th>Actions</th>
+      <th sec:authorize="hasAnyAuthority('ADMIN')">Action</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="category : ${categories}">
       <td th:text="${category.id}"></td>
       <td th:text="${category.name}"></td>
-      <td>
+      <td sec:authorize="hasAnyAuthority('ADMIN')">
         <a type="button" class="btn btn-success"
                 th:href="@{/categories/edit/{id}(id=${category.id})}">Edit</a>
         <a type="button" class="btn btn-danger"

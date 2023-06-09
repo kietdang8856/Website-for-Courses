@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import DangTuanKietW3.lab03.services.BookService;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -57,11 +58,22 @@ public class BookController {
         }
     }
 
-    @PostMapping("/edit")
-    public String editBook(@ModelAttribute("book") Book book) {
-        bookService.updateBook(book);
-        return "redirect:/books";
+//    @PostMapping("/edit")
+//    public String editBook(@ModelAttribute("book") Book book) {
+//        bookService.updateBook(book);
+//        return "redirect:/books";
+//    }
+@PostMapping("/edit")
+public String editBook(@Valid @ModelAttribute("book") Book book, BindingResult result, Model model) throws IOException {
+    if(result.hasErrors()){
+        model.addAttribute("categories", categoryService.getAllCategories());
+        return "book/edit";
     }
+    else {
+        bookService.updateBook(book);
+    }
+    return "redirect:/books";
+}
 
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable("id") Long id)

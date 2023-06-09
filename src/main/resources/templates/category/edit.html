@@ -10,6 +10,7 @@
 <div th:replace="layout :: header"></div>
 <div class="container">
   <h1>Edit Category</h1>
+  <td sec:authorize="hasAnyAuthority('ADMIN')">
   <form th:action="@{/categories/edit/{id}(id=${category.id})}" method="post" th:object="${category}">
     <div class="form-group">
       <label for="name">Name:</label>
@@ -19,6 +20,7 @@
     <br>
     <button type="submit" class="btn btn-primary">Save</button>
   </form>
+  </td>
 </div>
 </body>
 </html>

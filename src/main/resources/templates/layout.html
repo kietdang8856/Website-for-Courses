@@ -27,7 +27,7 @@
                     </li>
                     <li class="nav-item"><a href="/books" class="nav-link">List Book</a></li>
                     <li class="nav-item"><a href="/books/add" class="nav-link">Add Book</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/categories">List cate</a> </li>
+                    <li class="nav-item"><a class="nav-link" href="/categories">List Category</a> </li>
                     <li class="nav-item"><a class="nav-link" href="/categories/add">Add Category</a> </li>
 
                     <li sec:authorize="isAuthenticated()">
@@ -49,6 +49,22 @@
 </div>
 <footer th:fragment="footer">
     <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <script th:inline="javascript">
+        function addBook(link){
+            $.get($(link).attr('href'), function(data){
+                $('#add-form-container').html(data);
+                $('#add-form-modal').modal('show');
+            });
+        }
+
+        function addCategory(link){
+            $.get($(link).attr('href'), function(data){
+                $('#add-form-container').html(data);
+                $('#add-form-modal').modal('show');
+            });
+        }
+    </script>
 </footer>
 </body>
 </html>

@@ -11,6 +11,7 @@
 <div class="container">
   <h1>Edit Book</h1>
   <td sec:authorize="hasAnyAuthority('ADMIN')">
+    <div id="edit-form-container">
   <form th:action="@{/books/edit}" th:object="${book}" method="post">
     <input type="hidden" th:field="*{id}">
 
@@ -52,6 +53,7 @@
 
     <input type="submit" class="btn btn-primary" value="Save">
   </form>
+    </div>
   </td>
   <br>
   <a th:href="@{/books}">Back to List</a>
